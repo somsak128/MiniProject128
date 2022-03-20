@@ -13,58 +13,65 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Register | Login"),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 50, 10, 50),
-              child: Image.asset('images/TravelLogo.png'),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                login(),
-                const SizedBox(
-                  width: 20,
-                ),
-                register(),
-              ],
-            )
-          ],
+        appBar: AppBar(
+          title: const Text("Register | Login",style: TextStyle(color: Colors.white),),
         ),
-      ),
-    );
+        body: Center(
+          child: Container(
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+              image: AssetImage('images/T1.jpg'),
+              fit: BoxFit.cover,
+            )),
+            child:Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 50, 10, 50),
+                    child: Image.asset('images/TravelLogo.png'),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      login(),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      register(),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        ));
   }
 
   SizedBox register() {
     return SizedBox(
         child: ElevatedButton.icon(
-            onPressed: () {
-              Navigator.pushReplacement(context, MaterialPageRoute(
-                builder: (context){
-                  return const Register();
-                }));
-            }, 
-            icon: Icon(Icons.add), 
-            label: Text("Register"),
-        )
-    );
+      onPressed: () {
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) {
+          return const Register();
+        }));
+      },
+      icon: Icon(Icons.add, color: Color.fromARGB(255, 230, 245, 24),),
+      label: Text("Register",style: TextStyle(color: Colors.white),),
+    ));
   }
 
   SizedBox login() {
     return SizedBox(
         child: ElevatedButton.icon(
             onPressed: () {
-              Navigator.pushReplacement(context, MaterialPageRoute(
-                builder: (context){
-                  return const Login();
-                }));
-            },  
-            icon: Icon(Icons.login), 
-            label: Text("Login")));
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
+                return const Login();
+              }));
+            },
+            icon: Icon(Icons.login, color: Colors.amber,),
+            label: Text("Login",style: TextStyle(color: Colors.white),)));
   }
 }

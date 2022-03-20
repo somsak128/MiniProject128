@@ -40,86 +40,98 @@ class _RegisterState extends State<Register> {
               appBar: AppBar(
                 title: const Text("สร้างบัญชีผู้ใช้"),
               ),
-              body: Container(
+              body: Center(
+                child: Container(
+                  decoration: const BoxDecoration(
+                     image: DecorationImage(
+                  image: AssetImage('images/T2.jpg'),
+                  fit: BoxFit.cover,
+                )),
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: Form(
-                    key: formKey,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text("อีเมล", style: TextStyle(fontSize: 20)),
-                          TextFormField(
-                            validator: MultiValidator([
-                              RequiredValidator(errorText: "กรุณาป้อนอีเมลด้วยครับ"),
-                              EmailValidator(errorText: "รูปแบบอีเมลไม่ถูกต้อง")
-                            ]),
-                            keyboardType: TextInputType.emailAddress,
-                            onSaved: (email) {
-                              profile.email = email!;
-                            },
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          const Text("รหัสผ่าน", style: TextStyle(fontSize: 20)),
-                          TextFormField(
-                            validator: RequiredValidator(errorText: "กรุณาป้อนรหัสผ่านด้วยครับ"),
-                              obscureText: true,
-                              onSaved: (password) {
-                              profile.password = password!;
-                            },
-                          ),
-                          SizedBox(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              child: const Text("ลงทะเบียน",style: TextStyle(fontSize: 20)),
-                              onPressed: () async{
-                                if (formKey.currentState!.validate()) {
-                                  formKey.currentState!.save();
-                                  try{
-                                    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                                      email: profile.email, 
-                                      password: profile.password
-                                    ).then((value){
-                                      formKey.currentState!.reset();
-                                      Fluttertoast.showToast(
-                                        msg: "สร้างบัญชีผู้ใช้เรียบร้อยแล้ว",
-                                        gravity: ToastGravity.TOP
-                                      );
-                                      Navigator.pushReplacement(context,
-                                      MaterialPageRoute(builder: (context){
-                                          return const Homepage();
-                                      }));
-                                    });
-                                  }on FirebaseAuthException catch(e){
-                                      // ignore: avoid_print
-                                      print(e.code);
-                                      String message;
-                                      if(e.code == 'email-already-in-use'){
-                                          message = "มีอีเมลนี้ในระบบแล้วครับ โปรดใช้อีเมลอื่นแทน";
-                                      }else if(e.code == 'weak-password'){
-                                          message = "รหัสผ่านต้องมีความยาว 6 ตัวอักษรขึ้นไป";
-                                      }else{
-                                          message = e.message!;
+                  child: Center(
+                    child: Column(
+                      children: [
+                        Form(
+                          key: formKey,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text("อีเมล", style: TextStyle(fontSize: 20)),
+                                TextFormField(
+                                  validator: MultiValidator([
+                                    RequiredValidator(errorText: "กรุณาป้อนอีเมลด้วยครับ"),
+                                    EmailValidator(errorText: "รูปแบบอีเมลไม่ถูกต้อง")
+                                  ]),
+                                  keyboardType: TextInputType.emailAddress,
+                                  onSaved: (email) {
+                                    profile.email = email!;
+                                  },
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                const Text("รหัสผ่าน", style: TextStyle(fontSize: 20)),
+                                TextFormField(
+                                  validator: RequiredValidator(errorText: "กรุณาป้อนรหัสผ่านด้วยครับ"),
+                                    obscureText: true,
+                                    onSaved: (password) {
+                                    profile.password = password!;
+                                  },
+                                ),
+                                SizedBox(
+                                  width: double.infinity,
+                                  child: ElevatedButton(
+                                    child: const Text("ลงทะเบียน",style: TextStyle(fontSize: 20)),
+                                    onPressed: () async{
+                                      if (formKey.currentState!.validate()) {
+                                        formKey.currentState!.save();
+                                        try{
+                                          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                                            email: profile.email, 
+                                            password: profile.password
+                                          ).then((value){
+                                            formKey.currentState!.reset();
+                                            Fluttertoast.showToast(
+                                              msg: "สร้างบัญชีผู้ใช้เรียบร้อยแล้ว",
+                                              gravity: ToastGravity.TOP
+                                            );
+                                            Navigator.pushReplacement(context,
+                                            MaterialPageRoute(builder: (context){
+                                                return const Homepage();
+                                            }));
+                                          });
+                                        }on FirebaseAuthException catch(e){
+                                            // ignore: avoid_print
+                                            print(e.code);
+                                            String message;
+                                            if(e.code == 'email-already-in-use'){
+                                                message = "มีอีเมลนี้ในระบบแล้วครับ โปรดใช้อีเมลอื่นแทน";
+                                            }else if(e.code == 'weak-password'){
+                                                message = "รหัสผ่านต้องมีความยาว 6 ตัวอักษรขึ้นไป";
+                                            }else{
+                                                message = e.message!;
+                                            }
+                                            Fluttertoast.showToast(
+                                              msg: message,
+                                              gravity: ToastGravity.CENTER
+                                            );
+                                        }
                                       }
-                                      Fluttertoast.showToast(
-                                        msg: message,
-                                        gravity: ToastGravity.CENTER
-                                      );
-                                  }
-                                }
-                              },
+                                    },
+                                  ),
+                                )
+                              ],
                             ),
-                          )
-                        ],
-                      ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ),
-            );
+            ));
           }
           return const Scaffold(
             body: Center(

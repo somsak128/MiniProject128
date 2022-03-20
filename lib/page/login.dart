@@ -47,7 +47,7 @@ class _LoginState extends State<Login> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("อีเมล", style: TextStyle(fontSize: 20)),
+                          const Text("อีเมล", style: TextStyle(fontSize: 20)),
                           TextFormField(
                             validator: MultiValidator([
                               RequiredValidator(errorText: "กรุณาป้อนอีเมลด้วยครับ"),
@@ -58,10 +58,10 @@ class _LoginState extends State<Login> {
                               profile.email = email!;
                             },
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 15,
                           ),
-                          Text("รหัสผ่าน", style: TextStyle(fontSize: 20)),
+                          const Text("รหัสผ่าน", style: TextStyle(fontSize: 20)),
                           TextFormField(
                             validator: RequiredValidator(errorText: "กรุณาป้อนรหัสผ่านด้วยครับ"),
                               obscureText: true,
@@ -72,7 +72,7 @@ class _LoginState extends State<Login> {
                           SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
-                              child: Text("ลงชื่อเข้าใช้",style: TextStyle(fontSize: 20)),
+                              child: const Text("ลงชื่อเข้าใช้",style: TextStyle(fontSize: 20)),
                               onPressed: () async{
                                 if (formKey.currentState!.validate()) {
                                   formKey.currentState!.save();
@@ -84,7 +84,7 @@ class _LoginState extends State<Login> {
                                           formKey.currentState!.reset();
                                           Navigator.pushReplacement(context,
                                           MaterialPageRoute(builder: (context){
-                                              return Welcome();
+                                              return const Welcome(title: '',);
                                           }));
                                       });
                                   }on FirebaseAuthException catch(e){
@@ -105,7 +105,7 @@ class _LoginState extends State<Login> {
               ),
             );
           }
-          return Scaffold(
+          return const Scaffold(
             body: Center(
               child: CircularProgressIndicator(),
             ),
