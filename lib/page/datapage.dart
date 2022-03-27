@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // ignore: camel_case_types
 class datapage extends StatefulWidget {
@@ -13,13 +14,23 @@ class _datapageState extends State<datapage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(appBar: AppBar(
-      title:const Text("รายการสถานที่ท่องเที่ยว",style: TextStyle(color: Colors.white),),
+      title:const Text("My Travel List",style: TextStyle(color: Colors.white),),
+      actions: [
+        IconButton( 
+          icon: const Padding(
+            padding: EdgeInsets.fromLTRB(0, 0, 70, 0),
+            child: Icon(Icons.exit_to_app_rounded,color: Colors.redAccent,size: 30,),
+          ),
+          onPressed: (){
+            SystemNavigator.pop();
+          })
+        ],
       ),
       body: Center(
         child: Container(
             decoration: const BoxDecoration(
                 image: DecorationImage(
-              image: AssetImage('images/T5.jpg'),
+              image: AssetImage('images/T6.png'),
               fit: BoxFit.cover,
         )),
         child: StreamBuilder(
@@ -33,17 +44,17 @@ class _datapageState extends State<datapage> {
                 children: snapshot.data!.docs.map((document){
                     return Container(
                       child: Padding(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.all(15.0),
                         child: Card(
-                          color: const Color.fromARGB(255, 187, 187, 190),
+                          color: const Color.fromARGB(255, 249, 249, 251),
                           child: ListTile(
                               leading: CircleAvatar(
                                 radius: 30,
-                                child: FittedBox(child: Text(document["score"]),
+                                child: FittedBox(child: Text(document["score"],style: const TextStyle(fontSize:35,color: Colors.white),),
                                 ),
                               ),
-                              title: Text(document["attraction"]),
-                              subtitle: Text(document["story"]),
+                              title: Text(document["attraction"],style: const TextStyle(fontSize: 15),),
+                              subtitle: Text(document["story"],style: const TextStyle(fontSize: 13),),
                           ),
                         ),
                       ),

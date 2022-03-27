@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: '',
       theme: ThemeData(
-        primarySwatch: Colors.lightBlue,
+        primarySwatch: Colors.cyan,
         textTheme: GoogleFonts.notoSansThaiTextTheme(),
       ),
       home: const Welcome(title: ''),
@@ -81,19 +81,16 @@ class _WelcomeState extends State<Welcome> {
             children: [
               Formstory(),
               datapage()
-             
-              
-              
             ],
             ),
-            backgroundColor: Color.fromARGB(255, 231, 235, 15),
+            backgroundColor: Colors.amber,
             bottomNavigationBar: TabBar(
               tabs: [
-                Tab(text: "Save the Sights"),
-                Tab(text: "List of Attractions")
+                Tab(text: 'Record From My Travel',icon: Icon(Icons.save_alt_outlined,color: Colors.cyan,)),
+                Tab(text: 'My Travel List',icon: Icon(Icons.list_alt_outlined,color: Colors.cyan))
                 
-              ],
-        ),
+              ]
+        )
       ));
   }
 }

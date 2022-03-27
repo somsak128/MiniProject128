@@ -13,9 +13,9 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Register | Login",style: TextStyle(color: Colors.white),),
-        ),
+        // appBar: AppBar(
+        //   title: const Text("Register | Login",style: TextStyle(color: Colors.white),),
+        // ),
         body: Center(
           child: Container(
             decoration: const BoxDecoration(
@@ -57,8 +57,8 @@ class _HomepageState extends State<Homepage> {
           return const Register();
         }));
       },
-      icon: const Icon(Icons.add, color: Color.fromARGB(255, 230, 245, 24),),
-      label: const Text("Register",style: TextStyle(color: Colors.white),),
+      icon: const Icon(Icons.add, color: Colors.amber,size: 25),
+      label: const Text("Register",style: TextStyle(fontSize: 20,color: Colors.white),),
     ));
   }
 
@@ -71,7 +71,7 @@ class _HomepageState extends State<Homepage> {
                 return const Login();
               }));
             },
-            icon: Icon(Icons.login, color: Colors.amber,),
-            label: Text("Login",style: TextStyle(color: Colors.white),)));
+            icon: Icon(Icons.login, color: Colors.amber,size: 25,),
+            label: Text("Login",style: TextStyle(fontSize: 20,color: Colors.white),)));
   }
 }
