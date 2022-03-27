@@ -33,9 +33,11 @@
 //     );
 //   }
 // }
+
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:miniproject128/page/display.dart';
+import 'package:miniproject128/page/datapage.dart';
 import 'package:miniproject128/page/formstory.dart';
 
 void main() {
@@ -79,18 +81,20 @@ class _WelcomeState extends State<Welcome> {
             children: [
               Formstory(),
               datapage()
+             
+              
               
             ],
             ),
-            backgroundColor: Colors.blue,
+            backgroundColor: Color.fromARGB(255, 231, 235, 15),
             bottomNavigationBar: TabBar(
               tabs: [
                 Tab(text: "Save the Sights"),
-                Tab(text: "List of Attractions",)
+                Tab(text: "List of Attractions")
+                
               ],
-              ),
         ),
-        );
+      ));
   }
 }
   

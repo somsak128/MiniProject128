@@ -28,7 +28,7 @@ class _HomepageState extends State<Homepage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 50, 10, 50),
+                    padding: const EdgeInsets.fromLTRB(10, 100, 10, 50),
                     child: Image.asset('images/TravelLogo.png'),
                   ),
                   Row(
@@ -57,8 +57,8 @@ class _HomepageState extends State<Homepage> {
           return const Register();
         }));
       },
-      icon: Icon(Icons.add, color: Color.fromARGB(255, 230, 245, 24),),
-      label: Text("Register",style: TextStyle(color: Colors.white),),
+      icon: const Icon(Icons.add, color: Color.fromARGB(255, 230, 245, 24),),
+      label: const Text("Register",style: TextStyle(color: Colors.white),),
     ));
   }
 

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -46,53 +47,70 @@ class _FormstoryState extends State<Formstory> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "ชื่อสถานที่ท่องเที่ยว",
-                          style: TextStyle(fontSize: 20),
-                        ),
+                        
                         TextFormField(
                           validator: RequiredValidator(
                               errorText: "กรุณาป้อนชื่อสถานที่ท่องเที่ยวด้วยครับ"),
                           onSaved: (attraction) {
                             mytravelstory.attraction = attraction;
                           },
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        const Text(
-                          "ที่อยู่",
-                          style: TextStyle(fontSize: 20),
-                        ),
+                          decoration: const InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(16)),
+                            borderSide: BorderSide(color: Colors.blue, width: 2),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(16)),
+                            borderSide: BorderSide(color: Colors.blue, width: 2),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(16)),
+                            borderSide: BorderSide(color: Colors.red, width: 2),
+                          ),
+                          prefixIcon: Icon(
+                            Icons.travel_explore_rounded,
+                            color: Colors.blue,
+                          ),
+                          label: Text(
+                            'ชื่อสถานที่ท่องเที่ยว',
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                        )),
+                        
+                        const SizedBox(height: 15,),
+                        
                         TextFormField(
                           validator: RequiredValidator(
-                              errorText: "กรุณาป้อนที่อยู่ด้วยครับ"),
-                          onSaved: (address) {
-                            mytravelstory.address = address;
-                          },
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        const Text(
-                          "เรื่องราว",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        TextFormField(
-                          validator: RequiredValidator(
-                              errorText: "กรุณาป้อนนามสกุลด้วยครับ ^^"),
+                              errorText: "กรุณาป้อนเรื่องราวด้วยครับ"),
                           onSaved: (story) {
                             mytravelstory.story = story;
                           },
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
+                          decoration: const InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(16)),
+                            borderSide: BorderSide(color: Colors.blue, width: 2),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(16)),
+                            borderSide: BorderSide(color: Colors.blue, width: 2),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(16)),
+                            borderSide: BorderSide(color: Colors.red, width: 2),
+                          ),
+                          prefixIcon: Icon(
+                            Icons.drive_file_rename_outline_outlined,
+                            color: Colors.blue,
+                          ),
+                          label: Text(
+                            'เรื่องราว',
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                        )),
+
+                        const SizedBox(height: 15,),
                         
-                        const Text(
-                          "คะแนน",
-                          style: TextStyle(fontSize: 20),
-                        ),
+                        
                         TextFormField(
                           validator: RequiredValidator(
                               errorText: "กรุณาป้อนคะแนนด้วยครับ"),
@@ -100,7 +118,31 @@ class _FormstoryState extends State<Formstory> {
                             mytravelstory.score = score;
                           },
                           keyboardType: TextInputType.number,
-                        ),
+                          decoration: const InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(16)),
+                            borderSide: BorderSide(color: Colors.blue, width: 2),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(16)),
+                            borderSide: BorderSide(color: Colors.blue, width: 2),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(16)),
+                            borderSide: BorderSide(color: Colors.red, width: 2),
+                          ),
+                          prefixIcon: Icon(
+                            Icons.scoreboard_outlined,
+                            color: Colors.blue,
+                          ),
+                          label: Text(
+                            'คะแนน',
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                        )),
+
+                        const SizedBox(height: 15,),
+
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
@@ -113,14 +155,13 @@ class _FormstoryState extends State<Formstory> {
                                    formKey.currentState!.save();
                                    await _travelstoryCollection.add({
                                       "attraction":mytravelstory.attraction,
-                                      "address":mytravelstory.address,
                                       "story":mytravelstory.story,
                                       "score":mytravelstory.score
                                    });
                                    formKey.currentState!.reset();
                                 }
                               }),
-                        )
+                        ),
                       ],
                     ),
                   ),

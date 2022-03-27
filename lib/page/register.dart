@@ -58,7 +58,7 @@ class _RegisterState extends State<Register> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text("อีเมล", style: TextStyle(fontSize: 20)),
+                                
                                 TextFormField(
                                   validator: MultiValidator([
                                     RequiredValidator(errorText: "กรุณาป้อนอีเมลด้วยครับ"),
@@ -68,18 +68,62 @@ class _RegisterState extends State<Register> {
                                   onSaved: (email) {
                                     profile.email = email!;
                                   },
-                                ),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                const Text("รหัสผ่าน", style: TextStyle(fontSize: 20)),
+                                  decoration: const InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                                    borderSide: BorderSide(color: Colors.blue, width: 2),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                                    borderSide: BorderSide(color: Colors.blue, width: 2),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                                    borderSide: BorderSide(color: Colors.red, width: 2),
+                                  ),
+                                  prefixIcon: Icon(
+                                    Icons.lock,
+                                    color: Colors.blue,
+                                  ),
+                                  label: Text(
+                                    'อีเมล',
+                                    style: TextStyle(color: Colors.blue),
+                                  ),
+                                )),
+
+                                const SizedBox(height: 15,),
+
                                 TextFormField(
                                   validator: RequiredValidator(errorText: "กรุณาป้อนรหัสผ่านด้วยครับ"),
                                     obscureText: true,
                                     onSaved: (password) {
                                     profile.password = password!;
                                   },
-                                ),
+                                  decoration: const InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                                    borderSide: BorderSide(color: Colors.blue, width: 2),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                                    borderSide: BorderSide(color: Colors.blue, width: 2),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(16)),
+                                    borderSide: BorderSide(color: Colors.red, width: 2),
+                                  ),
+                                  prefixIcon: Icon(
+                                    Icons.lock,
+                                    color: Colors.blue,
+                                  ),
+                                  label: Text(
+                                    'รหัสผ่าน',
+                                    style: TextStyle(color: Colors.blue),
+                                  ),
+                                )),
+
+                                const SizedBox(height: 15,),
+
                                 SizedBox(
                                   width: double.infinity,
                                   child: ElevatedButton(

@@ -13,7 +13,7 @@ class _datapageState extends State<datapage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(appBar: AppBar(
-      title:Text("รายการสถานที่ท่องเที่ยว",style: TextStyle(color: Colors.white),)
+      title:const Text("รายการสถานที่ท่องเที่ยว",style: TextStyle(color: Colors.white),),
       ),
       body: Center(
         child: Container(
@@ -26,20 +26,26 @@ class _datapageState extends State<datapage> {
           stream: FirebaseFirestore.instance.collection("Travelstory").snapshots(),
           builder: (context,AsyncSnapshot<QuerySnapshot> snapshot){
             if(!snapshot.hasData){
-              return Center(child: CircularProgressIndicator(),);
+              return const Center(child: CircularProgressIndicator(),);
             }
             else{
               return ListView(
                 children: snapshot.data!.docs.map((document){
                     return Container(
-                      child: ListTile(
-                          leading: CircleAvatar(
-                            radius: 30,
-                            child: FittedBox(child: Text(document["score"]),
-                            ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Card(
+                          color: const Color.fromARGB(255, 187, 187, 190),
+                          child: ListTile(
+                              leading: CircleAvatar(
+                                radius: 30,
+                                child: FittedBox(child: Text(document["score"]),
+                                ),
+                              ),
+                              title: Text(document["attraction"]),
+                              subtitle: Text(document["story"]),
                           ),
-                          title: Text(document["attraction"]),
-                          subtitle: Text(document["address"]),
+                        ),
                       ),
                     );
                 }).toList(),
