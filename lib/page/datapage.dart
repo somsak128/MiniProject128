@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:miniproject128/page/edit.dart';
 
 // ignore: camel_case_types
 class datapage extends StatefulWidget {
@@ -48,6 +49,15 @@ class _datapageState extends State<datapage> {
                         child: Card(
                           color: const Color.fromARGB(255, 249, 249, 251),
                           child: ListTile(
+                              onTap: () {
+                                // Navigate to Edit Product
+                                var doc;
+                                Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => EditPage(id: document.id),
+                                )).then((value) => setState(() {}));
+                              },
                               leading: CircleAvatar(
                                 radius: 30,
                                 child: FittedBox(child: Text(document["score"],style: const TextStyle(fontSize:35,color: Colors.white),),
@@ -55,6 +65,34 @@ class _datapageState extends State<datapage> {
                               ),
                               title: Text(document["attraction"],style: const TextStyle(fontSize: 15),),
                               subtitle: Text(document["story"],style: const TextStyle(fontSize: 13),),
+                              trailing: IconButton(
+                                onPressed: () {
+                                  // Create Alert Dialog
+                                  var alertDialog = AlertDialog(
+                                    title: const Text('Delete Confirmation'),
+                                    content: Text(
+                                        'คุณต้องการลบ ${document['attraction']} ใช่หรือไม่'),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () => Navigator.pop(context),
+                                          child: const Text('ยกเลิก')),
+                                      TextButton(
+                                          onPressed: () {
+                                            delete(document.id);
+                                          },
+                                          child: const Text('ยืนยัน')),
+                                    ],
+                                  );
+                                  // Show Alert Dialog
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => alertDialog);
+                                },
+                                icon: const Icon(
+                                  Icons.delete_outline,
+                                  color: Colors.redAccent,
+                                ),
+                              ),
                           ),
                         ),
                       ),
@@ -66,6 +104,14 @@ class _datapageState extends State<datapage> {
         ),
       ),
       ));
+  }
+  Future<void> delete(String? id) {
+    return FirebaseFirestore.instance
+        .collection('Travelstory')
+        .doc(id)
+        .delete()
+        .then((value) => Navigator.pop(context))
+        .catchError((error) => print("Failed to delete user: $error"));
   }
 }
 // title: Text(document["attraction"]+document["address"]),

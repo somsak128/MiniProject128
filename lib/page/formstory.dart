@@ -171,8 +171,9 @@ class _FormstoryState extends State<Formstory> {
                                 },
                             icon: const Icon(Icons.add, color: Colors.amber,size: 25),
                             label: const Text("บันทึกข้อมูล",style: TextStyle(fontSize: 20,color: Colors.white),),
+                           ),
+                          )
                         ),
-                          )),
                       ],
                     ),
                   ),
