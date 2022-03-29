@@ -20,30 +20,34 @@ class _EditPageState extends State<EditPage> {
   final TextEditingController _attraction = TextEditingController();
   final TextEditingController _story = TextEditingController();
   final TextEditingController _score = TextEditingController();
-  
 
-  Future<void> getdata() async {
-    FirebaseFirestore.instance
-        .collection('Travelstory')
-        .doc(widget.id.toString())
-        .get()
-        .then((DocumentSnapshot value) {
-      Map<String, dynamic> doc = value.data()! as Map<String, dynamic>;
-      _attraction.text = doc["attraction"];
-      _story.text = doc["story"];
-      _score.text = doc["score"];
-    });
-  }
+  CollectionReference travel =
+      FirebaseFirestore.instance.collection('Travelstory');
 
-  
+  // Future<void> getdata() async {
+  //   FirebaseFirestore.instance
+  //       .collection('Travelstory')
+  //       .doc(widget.id)
+  //       .get()
+  //       .then((value) {
+  //     Map<String, dynamic> doc = value.data()! as Map<String, dynamic>;
+  //     _attraction.text = doc["attraction"];
+  //     _story.text = doc["story"];
+  //     _score.text = doc["score"];
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Padding(
-          padding: const EdgeInsets.fromLTRB(90,0, 0, 0),
-          child: const Text('Update',style: TextStyle(color: Color.fromARGB(255, 255, 255, 255),fontSize: 25,)),
+          padding: const EdgeInsets.fromLTRB(90, 0, 0, 0),
+          child: const Text('Update',
+              style: TextStyle(
+                color: Color.fromARGB(255, 255, 255, 255),
+                fontSize: 25,
+              )),
         ),
       ),
       body: Form(
@@ -54,143 +58,169 @@ class _EditPageState extends State<EditPage> {
   }
 
   Widget mainInput() {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height:20,),
-            TextFormField(
-              
-              controller: _attraction,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'กรุณาป้อนชื่อสถานที่ท่องเที่ยวด้วยครับ';
-                }
-                return null;
-              },
-              decoration: const InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-                borderSide: BorderSide(color: Colors.cyan, width: 2),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-                borderSide: BorderSide(color: Colors.cyan, width: 2),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-                borderSide: BorderSide(color: Colors.red, width: 2),
-              ),
-              prefixIcon: Icon(
-                Icons.travel_explore_rounded,
-                color: Colors.amber,
-              ),
-              label: Text(
-                'ชื่อสถานที่ท่องเที่ยว',
-                style: TextStyle(color: Colors.amber),
-              ),
-            )),
-            
-            const SizedBox(height: 40,),
-            
-            TextFormField(
-              controller: _story,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'กรุณาป้อนเรื่องราวด้วยครับ';
-                }
-                return null;
-              },
-              decoration: const InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-                borderSide: BorderSide(color: Colors.cyan, width: 2),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-                borderSide: BorderSide(color: Colors.cyan, width: 2),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-                borderSide: BorderSide(color: Colors.red, width: 2),
-              ),
-              prefixIcon: Icon(
-                Icons.drive_file_rename_outline_outlined,
-                color: Colors.amber,
-              ),
-              label: Text(
-                'เรื่องราว',
-                style: TextStyle(color: Colors.amber),
-              ),
-            )),
-        
-            const SizedBox(height: 40,),
-            
-            
-            TextFormField(
-              controller: _score,
-              keyboardType: TextInputType.number,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'กรุณาป้อนคะแนนด้วยครับ';
-                }
-                return null;
-              },
-              decoration: const InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-                borderSide: BorderSide(color: Colors.cyan, width: 2),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-                borderSide: BorderSide(color: Colors.cyan, width: 2),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-                borderSide: BorderSide(color: Colors.red, width: 2),
-              ),
-              prefixIcon: Icon(
-                Icons.scoreboard_outlined,
-                color: Colors.amber,
-              ),
-              label: Text(
-                'คะแนน',
-                style: TextStyle(color: Colors.amber),
-              ),
-            )),
-        
-            const SizedBox(height: 50,),
-      
-            SizedBox(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 100),
-                  child: ElevatedButton.icon(
-                  onPressed: () async{
+    return FutureBuilder<DocumentSnapshot>(
+      future: travel.doc(widget.id).get(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          Map<String, dynamic> doc =
+              snapshot.data!.data() as Map<String, dynamic>;
+          _attraction.text = doc["attraction"];
+          _story.text = doc["story"];
+          _score.text = doc["score"];
+
+          return Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  TextFormField(
+                      controller: _attraction,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'กรุณาป้อนชื่อสถานที่ท่องเที่ยวด้วยครับ';
+                        }
+                        return null;
+                      },
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(16)),
+                          borderSide: BorderSide(color: Colors.cyan, width: 2),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(16)),
+                          borderSide: BorderSide(color: Colors.cyan, width: 2),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(16)),
+                          borderSide: BorderSide(color: Colors.red, width: 2),
+                        ),
+                        prefixIcon: Icon(
+                          Icons.travel_explore_rounded,
+                          color: Colors.amber,
+                        ),
+                        label: Text(
+                          'ชื่อสถานที่ท่องเที่ยว',
+                          style: TextStyle(color: Colors.amber),
+                        ),
+                      )),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  TextFormField(
+                      controller: _story,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'กรุณาป้อนเรื่องราวด้วยครับ';
+                        }
+                        return null;
+                      },
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(16)),
+                          borderSide: BorderSide(color: Colors.cyan, width: 2),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(16)),
+                          borderSide: BorderSide(color: Colors.cyan, width: 2),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(16)),
+                          borderSide: BorderSide(color: Colors.red, width: 2),
+                        ),
+                        prefixIcon: Icon(
+                          Icons.drive_file_rename_outline_outlined,
+                          color: Colors.amber,
+                        ),
+                        label: Text(
+                          'เรื่องราว',
+                          style: TextStyle(color: Colors.amber),
+                        ),
+                      )),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  TextFormField(
+                      controller: _score,
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'กรุณาป้อนคะแนนด้วยครับ';
+                        }
+                        return null;
+                      },
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(16)),
+                          borderSide: BorderSide(color: Colors.cyan, width: 2),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(16)),
+                          borderSide: BorderSide(color: Colors.cyan, width: 2),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(16)),
+                          borderSide: BorderSide(color: Colors.red, width: 2),
+                        ),
+                        prefixIcon: Icon(
+                          Icons.scoreboard_outlined,
+                          color: Colors.amber,
+                        ),
+                        label: Text(
+                          'คะแนน',
+                          style: TextStyle(color: Colors.amber),
+                        ),
+                      )),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  SizedBox(
+                      child: Padding(
+                    padding: const EdgeInsets.only(left: 100),
+                    child: ElevatedButton.icon(
+                      style: ButtonStyle(
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                        ),
+                      ),
+                      onPressed: () async {
                         update();
                       },
-                  icon: const Icon(Icons.add, color: Colors.amber,size: 25),
-                  label: const Text("บันทึกข้อมูล",style: TextStyle(fontSize: 20,color: Colors.white),),
+                      icon:
+                          const Icon(Icons.add, color: Colors.amber, size: 25),
+                      label: const Text(
+                        "บันทึกข้อมูล",
+                        style: TextStyle(fontSize: 20, color: Colors.white),
+                      ),
+                    ),
+                  )),
+                ],
               ),
-             )
             ),
-          ],
-        ),
-      ),
+          );
+        }
+        return const Text('loading');
+      },
     );
   }
 
   Future<void> update() async {
     return FirebaseFirestore.instance
         .collection('Travelstory')
-        .doc(widget.id.toString())
+        .doc(widget.id)
         .update({
           'attraction': _attraction.text,
           'story': _story.text,
           'score': _score.text
         })
         .then((value) => Navigator.pop(context))
+        // ignore: avoid_print
         .catchError((error) => print("Failed to update user: $error"));
   }
 }
