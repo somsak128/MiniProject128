@@ -56,7 +56,7 @@ class _datapageState extends State<datapage> {
                     children: snapshot.data!.docs.map((document) {
                       return Container(
                         child: Padding(
-                          padding: const EdgeInsets.all(15.0),
+                          padding: const EdgeInsets.all(10.0),
                           child: Card(
                             color: const Color.fromARGB(255, 249, 249, 251),
                             child: ListTile(
